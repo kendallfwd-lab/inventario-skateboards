@@ -1,0 +1,3 @@
+import {test,expect} from '@playwright/test';
+test('muestra acceso seguro y formulario usable',async({page})=>{await page.goto('/');await expect(page.getByRole('heading',{name:'Inicia sesión'})).toBeVisible();await expect(page.getByLabel('Correo electrónico')).toBeVisible();await expect(page.getByLabel('Contraseña')).toBeVisible();await expect(page.getByText(/Cookies HttpOnly/)).toBeVisible();});
+test('pantalla de acceso se adapta a viewport',async({page})=>{await page.goto('/');const box=await page.locator('body').boundingBox();expect(box?.width).toBeGreaterThan(0);expect(await page.locator('body').evaluate(el=>el.scrollWidth<=window.innerWidth)).toBeTruthy();});

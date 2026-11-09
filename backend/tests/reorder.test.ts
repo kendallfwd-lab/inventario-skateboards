@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {calculateReorder,activeAlert} from '../src/services/reorder.js';
+test('calcula stock seguridad y punto reorden de los cuatro datos académicos',()=>{assert.deepEqual(calculateReorder(40,55,3),{safetyStock:45,reorderPoint:165});assert.deepEqual(calculateReorder(120,160,5),{safetyStock:200,reorderPoint:800});assert.deepEqual(calculateReorder(600,900,4),{safetyStock:1200,reorderPoint:3600});assert.deepEqual(calculateReorder(6,10,2),{safetyStock:8,reorderPoint:20});});
+test('solo block y arena disparan alertas con los saldos semilla',()=>{assert.equal(activeAlert(190,165),false);assert.equal(activeAlert(850,800),false);assert.equal(activeAlert(2800,3600),true);assert.equal(activeAlert(14,20),true);});
+test('rechaza políticas inconsistentes',()=>assert.throws(()=>calculateReorder(10,5,2)));

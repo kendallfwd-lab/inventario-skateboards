@@ -1,0 +1,2 @@
+const BASE='/api';export async function api<T=any>(path:string,options:RequestInit={}):Promise<T>{const response=await fetch(BASE+path,{...options,credentials:'include',headers:{'Content-Type':'application/json',...options.headers}});if(response.status===204)return undefined as T;const body=await response.json().catch(()=>({error:'Respuesta inválida'}));if(!response.ok)throw new Error(body.error||`Error ${response.status}`);return body as T;}
+export const money=(n:number)=>new Intl.NumberFormat('es-CR',{style:'currency',currency:'CRC',maximumFractionDigits:0}).format(n);

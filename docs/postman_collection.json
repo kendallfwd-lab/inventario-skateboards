@@ -1,0 +1,323 @@
+{
+  "info": {
+    "name": "Del Valle Inventory AI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3010"
+    },
+    {
+      "key": "materialId",
+      "value": "1"
+    },
+    {
+      "key": "locationId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/auth/login",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"{{adminEmail}}\", \"password\": \"{{adminPassword}}\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Me",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/auth/me",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Create requisition",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/requisiciones",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"numero\": \"REQ-DEMO-01\", \"areaId\": 1, \"motivo\": \"Material requerido para obra\", \"items\": [{\"materialId\": 1, \"cantidad\": 5}]}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Create supplier quote",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/cotizaciones",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"numero\": \"COT-DEMO-01\", \"requisicionId\": 1, \"proveedorId\": 1, \"fecha\": \"2026-11-09\", \"items\": [{\"materialId\": 1, \"cantidad\": 5, \"precioCRC\": 6300}]}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Supplier evaluation criteria",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/criterios-evaluacion",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "List invoices",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/facturas",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "List recorded payments",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/pagos-registrados",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Create operator (admin only)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/usuarios",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"nombre\": \"Operador de compras\", \"email\": \"operador@example.test\", \"password\": \"CAMBIAR-ESTA-CLAVE-LARGA\", \"roles\": [\"COMPRAS\"]}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Dashboard",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/dashboard/resumen",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "List materials",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/materiales",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "List suppliers",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/proveedores",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "List stock policies",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/politicas-stock",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Moves",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/movimientos",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Create inbound movement",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/movimientos",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"materialId\": \"{{materialId}}\", \"quantity\": 100, \"type\": \"ENTRADA\", \"toId\": \"{{locationId}}\", \"document\": \"DEMO-RECEIPT\", \"idempotencyKey\": \"demo-unique-key-0001\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Possible duplicates",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/ordenes/posibles-duplicados",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Overprice report",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/reportes/fuga-valor",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gemini status",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/ai/status",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gemini question",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/api/ai/chat",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"question\": \"¿Qué materiales debo reponer hoy?\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

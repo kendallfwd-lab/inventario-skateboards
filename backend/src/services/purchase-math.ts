@@ -1,0 +1,3 @@
+export type OrderLine={quantity:number;unitPrice:number;contractPrice:number|null};
+export function overpriceTotal(lines:OrderLine[]){return lines.reduce((sum,line)=>sum+(line.contractPrice===null?0:Math.max(0,line.unitPrice-line.contractPrice)*line.quantity),0);}
+export function duplicateCandidate(a:{supplier:string;sku:string;quantity:number;date:string},b:{supplier:string;sku:string;quantity:number;date:string},tolerance=.05,windowDays=3){const days=Math.abs(Date.parse(a.date)-Date.parse(b.date))/86_400_000;const quantityGap=Math.abs(a.quantity-b.quantity);return {candidate:a.supplier===b.supplier&&a.sku===b.sku&&quantityGap<=Math.max(a.quantity,b.quantity)*tolerance&&days<=windowDays,days,quantityGap};}
