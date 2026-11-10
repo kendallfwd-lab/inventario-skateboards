@@ -868,7 +868,7 @@ export function SkateDeckRail({
   );
 }
 
-function GripFace({ uid, item, mask, fallback, tone }: { uid: string; item: SkateDeck; mask: string; fallback: boolean; tone: number }) {
+function GripFace({ uid, item, fallback, tone }: { uid: string; item: SkateDeck; fallback: boolean; tone: number }) {
   if (item.gripImage) {
     return (
       <div data-grip className="absolute inset-0">
@@ -876,11 +876,12 @@ function GripFace({ uid, item, mask, fallback, tone }: { uid: string; item: Skat
       </div>
     );
   }
+  const gripMask = FALLBACK_MASK;
   const cut = `inset(${GRIP_WINDOW.top}% ${GRIP_WINDOW.side}% ${GRIP_WINDOW.bottom}% ${GRIP_WINDOW.side}% round 4px)`;
   return (
     <div data-grip className="absolute inset-0 [--grip-ink:color-mix(in_oklab,var(--color-foreground)_90%,var(--color-background))] dark:[--grip-ink:color-mix(in_oklab,var(--color-background)_55%,black)]">
-      <span aria-hidden="true" className="absolute inset-0" style={{ ...maskStyle(mask, fallback), background: PLY }} />
-      <span aria-hidden="true" className="absolute inset-0 overflow-hidden" style={{ ...maskStyle(mask, fallback), transform: "scale(0.974, 0.992)" }}>
+      <span aria-hidden="true" className="absolute inset-0" style={{ ...maskStyle(gripMask, true), background: PLY }} />
+      <span aria-hidden="true" className="absolute inset-0 overflow-hidden" style={{ ...maskStyle(gripMask, true), transform: "scale(0.974, 0.992)" }}>
         <span className="absolute inset-0 bg-[var(--grip-ink)]" />
         <svg aria-hidden="true" className="absolute inset-0 size-full opacity-50 mix-blend-screen dark:opacity-35" preserveAspectRatio="none">
           <rect width="100%" height="100%" filter={`url(#${uid}-grit)`} />
@@ -920,7 +921,6 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
   const angle = React.useRef({ value: 0, target: 0, velocity: 0, raf: 0, last: 0, dragging: false, startX: 0, startAngle: 0, auto: 0 });
   const closing = React.useRef(false);
   const titleId = `${uid}-deck-title`;
-  const mask = fallback ? FALLBACK_MASK : `url("${item.image}")`;
 
   const spin = React.useCallback(() => {
     const a = angle.current;
@@ -1059,7 +1059,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
                 {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain mix-blend-screen" />}
               </div>
               <div data-face="grip" className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: "rotateY(180deg)" }}>
-                <GripFace uid={uid} item={item} mask={mask} fallback={fallback} tone={index} />
+                <GripFace uid={uid} item={item} fallback={fallback} tone={index} />
                 <Hole h={600} />
               </div>
             </div>
