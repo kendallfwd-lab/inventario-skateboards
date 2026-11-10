@@ -52,6 +52,7 @@ export interface SkateDeckRailProps extends React.ComponentProps<"section"> {
 }
 
 const DECK_ASPECT = 0.238;
+const DETAIL_DECK_ASPECT = 724 / 2172;
 const PERSPECTIVE = 900;
 const LIFT_Z = 40;
 const LIFT_SCALE = 0.05;
@@ -878,9 +879,7 @@ function GripFace({ uid, item, mask, fallback, tone }: { uid: string; item: Skat
   const cut = `inset(${GRIP_WINDOW.top}% ${GRIP_WINDOW.side}% ${GRIP_WINDOW.bottom}% ${GRIP_WINDOW.side}% round 4px)`;
   return (
     <div data-grip className="absolute inset-0 [--grip-ink:color-mix(in_oklab,var(--color-foreground)_90%,var(--color-background))] dark:[--grip-ink:color-mix(in_oklab,var(--color-background)_55%,black)]">
-      {fallback
-        ? <span aria-hidden="true" className="absolute inset-0" style={{ ...maskStyle(mask, fallback), background: PLY }} />
-        : <img src={item.image} alt="" draggable={false} className="pointer-events-none absolute inset-0 size-full -scale-x-100 select-none object-contain" />}
+      <span aria-hidden="true" className="absolute inset-0" style={{ ...maskStyle(mask, fallback), background: PLY }} />
       <span aria-hidden="true" className="absolute inset-0 overflow-hidden" style={{ ...maskStyle(mask, fallback), transform: "scale(0.974, 0.992)" }}>
         <span className="absolute inset-0 bg-[var(--grip-ink)]" />
         <svg aria-hidden="true" className="absolute inset-0 size-full opacity-50 mix-blend-screen dark:opacity-35" preserveAspectRatio="none">
@@ -892,7 +891,7 @@ function GripFace({ uid, item, mask, fallback, tone }: { uid: string; item: Skat
         <span key={`${x}-${y}`} aria-hidden="true" data-bolt className="absolute h-auto min-w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/80" style={{ left: `${(x ?? 0) * 100}%`, top: `${(y ?? 0) * 100}%`, width: "3.6%", aspectRatio: "1", boxShadow: "inset 0 1px 1px color-mix(in oklab, black 80%, transparent), 0 0.5px 0 color-mix(in oklab, white 26%, transparent)" }} />
       ))}
       <span aria-hidden="true" data-window className="absolute inset-0" style={{ clipPath: cut, WebkitClipPath: cut }}>
-        {fallback ? <FallbackArt tone={tone} /> : <img src={item.image} alt="" draggable={false} className="pointer-events-none absolute inset-0 size-full -scale-x-100 select-none object-contain" />}
+        {fallback ? <FallbackArt tone={tone} /> : null}
       </span>
       <span aria-hidden="true" className="absolute rounded-[4px] shadow-[inset_0_1px_3px_color-mix(in_oklab,black_70%,transparent),0_0_0_1px_color-mix(in_oklab,white_14%,transparent)]" style={{ left: `${GRIP_WINDOW.side}%`, right: `${GRIP_WINDOW.side}%`, top: `${GRIP_WINDOW.top}%`, bottom: `${GRIP_WINDOW.bottom}%` }} />
     </div>
@@ -980,13 +979,6 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
       a.target = 180; a.value = 180; a.velocity = 0;
       if (spinRef.current) spinRef.current.style.transform = "rotateY(180deg)";
       setSide("grip");
-    } else {
-      a.auto = window.setTimeout(() => {
-        a.auto = 0;
-        a.target = 180;
-        setSide("grip");
-        spin();
-      }, 860);
     }
     return () => {
       cancelAnimationFrame(raf);
@@ -1053,7 +1045,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
         <svg aria-hidden="true" viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M3 3l10 10M13 3L3 13" /></svg>
       </button>
       <div className="relative grid w-full max-w-3xl grid-cols-[auto_minmax(0,1fr)] items-center gap-5 sm:gap-12">
-        <div ref={figureRef} data-figure className="relative h-[min(68svh,600px)] origin-top sm:h-[min(72svh,600px)]" style={{ aspectRatio: DECK_ASPECT }}>
+        <div ref={figureRef} data-figure className="relative h-[min(68svh,600px)] origin-top sm:h-[min(72svh,600px)]" style={{ aspectRatio: DETAIL_DECK_ASPECT }}>
           <span aria-hidden="true" className="absolute inset-0 translate-x-[8%] translate-y-[3%] bg-black/25 blur-xl dark:bg-black/70" style={maskStyle(mask, fallback)} />
           <div
             className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"
@@ -1065,7 +1057,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
           >
             <div ref={spinRef} data-detail-spin className="absolute inset-0 [transform-style:preserve-3d]">
               <div data-face="graphic" className="absolute inset-0 [backface-visibility:hidden]">
-                {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-fill" />}
+                {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain" />}
                 <Hole h={600} />
               </div>
               <div data-face="grip" className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: "rotateY(180deg)" }}>
