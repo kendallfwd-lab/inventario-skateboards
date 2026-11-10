@@ -52,6 +52,7 @@ export interface SkateDeckRailProps extends React.ComponentProps<"section"> {
 }
 
 const DECK_ASPECT = 0.238;
+const DETAIL_DECK_ASPECT = 724 / 2172;
 const PERSPECTIVE = 900;
 const LIFT_Z = 40;
 const LIFT_SCALE = 0.05;
@@ -1052,8 +1053,8 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
         {labels.close}
         <svg aria-hidden="true" viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M3 3l10 10M13 3L3 13" /></svg>
       </button>
-      <div className="relative grid w-full max-w-4xl grid-cols-[auto_minmax(0,1fr)] items-center gap-5 sm:gap-16">
-        <div ref={figureRef} data-figure className="relative h-[min(78svh,700px)] origin-top sm:h-[min(82svh,700px)]" style={{ aspectRatio: DECK_ASPECT }}>
+      <div className="relative grid w-full max-w-3xl grid-cols-[auto_minmax(0,1fr)] items-center gap-5 sm:gap-12">
+        <div ref={figureRef} data-figure className="relative h-[min(68svh,600px)] origin-top sm:h-[min(72svh,600px)]" style={{ aspectRatio: DETAIL_DECK_ASPECT }}>
           <span aria-hidden="true" className="absolute inset-0 translate-x-[8%] translate-y-[3%] bg-black/25 blur-xl dark:bg-black/70" style={maskStyle(mask, fallback)} />
           <div
             className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"
