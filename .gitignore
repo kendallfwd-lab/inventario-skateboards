@@ -1,5 +1,9 @@
 backend-run.log
 backend-run.err.log
+backend-live.log
+backend-live-error.log
+dev-server.log
+dev-server-error.log
 test-results/
 playwright-report/
 .npm-cache/
