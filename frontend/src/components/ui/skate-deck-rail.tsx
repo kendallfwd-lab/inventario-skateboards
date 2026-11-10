@@ -1044,9 +1044,8 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
         {labels.close}
         <svg aria-hidden="true" viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M3 3l10 10M13 3L3 13" /></svg>
       </button>
-      <div className="relative grid w-full max-w-3xl grid-cols-[auto_minmax(0,1fr)] items-center gap-5 sm:gap-12">
-        <div ref={figureRef} data-figure className="relative h-[min(68svh,600px)] origin-top sm:h-[min(72svh,600px)]" style={{ aspectRatio: DETAIL_DECK_ASPECT }}>
-          <span aria-hidden="true" className="absolute inset-0 translate-x-[8%] translate-y-[3%] bg-black/15 blur-xl" style={maskStyle(mask, fallback)} />
+      <div className="relative grid w-full max-w-4xl grid-cols-[minmax(180px,0.44fr)_minmax(0,1fr)] items-center gap-8 sm:gap-16">
+        <div ref={figureRef} data-figure className="relative mx-auto h-[min(72svh,620px)] w-full max-w-[238px] origin-top sm:h-[min(76svh,620px)]" style={{ aspectRatio: DETAIL_DECK_ASPECT }}>
           <div
             className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"
             style={{ perspective: "1200px" }}
@@ -1056,9 +1055,8 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
             onPointerCancel={() => { angle.current.dragging = false; turnTo(side); }}
           >
             <div ref={spinRef} data-detail-spin className="absolute inset-0 [transform-style:preserve-3d]">
-              <div data-face="graphic" className="absolute inset-0 [backface-visibility:hidden]">
+              <div data-face="graphic" className="absolute inset-0 overflow-hidden rounded-[28%] [backface-visibility:hidden]">
                 {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain mix-blend-screen" />}
-                <Hole h={600} />
               </div>
               <div data-face="grip" className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: "rotateY(180deg)" }}>
                 <GripFace uid={uid} item={item} mask={mask} fallback={fallback} tone={index} />
