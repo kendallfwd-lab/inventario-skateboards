@@ -307,7 +307,7 @@ export function SkateDeckRail({
       const chrome = section.getBoundingClientRect().height - stage.getBoundingClientRect().height;
       const byHeight = (window.innerHeight - chrome - 12 - RAIL_TOP - FOOT_PX) / STAGE_K;
       const fit = (width - 2 * EDGE) / (Math.max(1, count) * (DECK_ASPECT + GAP) + FRONT_EXTRA * DECK_ASPECT);
-      const carousel = fit < MIN_RAIL_H;
+      const carousel = count > 6 || fit < MIN_RAIL_H;
       const raw = carousel ? Math.min(CAROUSEL_MAX_H, width * 0.92, byHeight) : Math.min(MAX_H, fit, byHeight);
       const h = Math.round(Math.max(150, raw));
       setSize((old) => (Math.abs(old.width - width) < 0.5 && old.carousel === carousel && Math.abs(old.h - h) < 1 ? old : { width, h, carousel }));
