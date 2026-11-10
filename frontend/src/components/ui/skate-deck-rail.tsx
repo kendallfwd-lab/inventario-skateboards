@@ -83,9 +83,6 @@ const CONCAVE = "linear-gradient(90deg, color-mix(in oklab, black 46%, transpare
 const RAIL_GRADIENT = "linear-gradient(to bottom, color-mix(in oklab, var(--rail-ink) 56%, white) 0%, color-mix(in oklab, var(--rail-ink) 84%, white) 17%, var(--rail-ink) 46%, color-mix(in oklab, var(--rail-ink) 72%, black) 80%, color-mix(in oklab, var(--rail-ink) 50%, black) 100%)";
 const REST_SHADE = "linear-gradient(90deg, color-mix(in oklab, black 34%, transparent), color-mix(in oklab, black 12%, transparent) 45%, color-mix(in oklab, black 4%, transparent))";
 const BRACKET_GRADIENT = "linear-gradient(to right, color-mix(in oklab, var(--rail-ink) 70%, white), var(--rail-ink) 55%, color-mix(in oklab, var(--rail-ink) 60%, black))";
-const PLY = "linear-gradient(to right, color-mix(in oklab, white 52%, var(--color-muted-foreground)), color-mix(in oklab, white 82%, var(--color-muted-foreground)) 50%, color-mix(in oklab, white 48%, var(--color-muted-foreground)))";
-const BOLTS = [0.174, 0.229, 0.748, 0.804].flatMap((y) => [0.402, 0.598].map((x) => [x, y]));
-const GRIP_WINDOW = { top: 84.5, side: 33, bottom: 7.5 };
 
 function clamp(value: number, min: number, max: number) {
   return Math.max(min, Math.min(max, value));
@@ -868,7 +865,7 @@ export function SkateDeckRail({
   );
 }
 
-function GripFace({ uid, item, fallback, tone }: { uid: string; item: SkateDeck; fallback: boolean; tone: number }) {
+function GripFace({ item, fallback, tone }: { item: SkateDeck; fallback: boolean; tone: number }) {
   if (item.gripImage) {
     return (
       <div data-grip className="absolute inset-0">
@@ -876,25 +873,9 @@ function GripFace({ uid, item, fallback, tone }: { uid: string; item: SkateDeck;
       </div>
     );
   }
-  const gripMask = FALLBACK_MASK;
-  const cut = `inset(${GRIP_WINDOW.top}% ${GRIP_WINDOW.side}% ${GRIP_WINDOW.bottom}% ${GRIP_WINDOW.side}% round 4px)`;
   return (
-    <div data-grip className="absolute inset-0 [--grip-ink:color-mix(in_oklab,var(--color-foreground)_90%,var(--color-background))] dark:[--grip-ink:color-mix(in_oklab,var(--color-background)_55%,black)]">
-      <span aria-hidden="true" className="absolute inset-0" style={{ ...maskStyle(gripMask, true), background: PLY }} />
-      <span aria-hidden="true" className="absolute inset-0 overflow-hidden" style={{ ...maskStyle(gripMask, true), transform: "scale(0.974, 0.992)" }}>
-        <span className="absolute inset-0 bg-[var(--grip-ink)]" />
-        <svg aria-hidden="true" className="absolute inset-0 size-full opacity-50 mix-blend-screen dark:opacity-35" preserveAspectRatio="none">
-          <rect width="100%" height="100%" filter={`url(#${uid}-grit)`} />
-        </svg>
-        <span className="absolute inset-0" style={{ background: CONCAVE }} />
-      </span>
-      {BOLTS.map(([x, y]) => (
-        <span key={`${x}-${y}`} aria-hidden="true" data-bolt className="absolute h-auto min-w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/80" style={{ left: `${(x ?? 0) * 100}%`, top: `${(y ?? 0) * 100}%`, width: "3.6%", aspectRatio: "1", boxShadow: "inset 0 1px 1px color-mix(in oklab, black 80%, transparent), 0 0.5px 0 color-mix(in oklab, white 26%, transparent)" }} />
-      ))}
-      <span aria-hidden="true" data-window className="absolute inset-0" style={{ clipPath: cut, WebkitClipPath: cut }}>
-        {fallback ? <FallbackArt tone={tone} /> : null}
-      </span>
-      <span aria-hidden="true" className="absolute rounded-[4px] shadow-[inset_0_1px_3px_color-mix(in_oklab,black_70%,transparent),0_0_0_1px_color-mix(in_oklab,white_14%,transparent)]" style={{ left: `${GRIP_WINDOW.side}%`, right: `${GRIP_WINDOW.side}%`, top: `${GRIP_WINDOW.top}%`, bottom: `${GRIP_WINDOW.bottom}%` }} />
+    <div data-grip className="absolute inset-0 overflow-hidden rounded-[28%]">
+      {fallback ? <FallbackArt tone={tone} /> : <img src={item.image} alt={`${item.name} reverso`} draggable={false} className="pointer-events-none absolute inset-0 size-full -scale-x-100 select-none object-contain mix-blend-screen" />}
     </div>
   );
 }
@@ -1059,7 +1040,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
                 {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain mix-blend-screen" />}
               </div>
               <div data-face="grip" className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: "rotateY(180deg)" }}>
-                <GripFace uid={uid} item={item} fallback={fallback} tone={index} />
+                <GripFace item={item} fallback={fallback} tone={index} />
                 <Hole h={600} />
               </div>
             </div>
