@@ -1,11 +1,9 @@
-node_modules/
+backend-run.log
+backend-run.err.log
+test-results/
+playwright-report/
 .npm-cache/
 .env
-.env.*.local
-backend/.env
-frontend/.env
-**/dist/
-**/coverage/
+node_modules/
+dist/
 *.tsbuildinfo
-playwright-report/
-test-results/
