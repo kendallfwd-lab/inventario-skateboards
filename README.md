@@ -4,7 +4,7 @@
 
 La raíz pública ahora es una tienda de tablas en español: exhibidor interactivo, catálogo, filtros, detalle de producto, carrito persistente y solicitud de pedido. El área privada se encuentra en `/admin/login` y conserva la autenticación por cookie HttpOnly. Los pedidos aceptados por administración generan salidas de inventario desde la misma fuente de movimientos; cancelar un pedido aceptado registra una reposición idempotente.
 
-La migración `database/migrations/001_skate_store.sql` añade productos comerciales, variantes vinculadas a materiales inventariables, pedidos de clientes y líneas históricas de precio. `database/store-seed.sql` y `database/store-demo-catalog.sql` cargan dieciséis diseños ficticios de deck con stock inicial idempotente, sin modificar ni renombrar el histórico de construcción.
+La migración `database/migrations/001_skate_store.sql` añade productos comerciales, variantes vinculadas a materiales inventariables, pedidos de clientes y líneas históricas de precio. Las semillas de tienda cargan veintiocho diseños ficticios de deck con stock inicial idempotente, sin modificar ni renombrar el histórico de construcción.
 
 Aplicación local para compras e inventario de Constructora Del Valle S.A. (datos académicos ficticios). Interfaz React/TypeScript, API Node/Express/TypeScript, MySQL 8.4/InnoDB y Gemini opcional de solo lectura.
 
