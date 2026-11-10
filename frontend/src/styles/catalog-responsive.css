@@ -1,0 +1,21 @@
+.product-art {
+  height: clamp(240px, 24vw, 300px);
+  padding: 8px;
+}
+
+.catalog-deck-image {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 900px) {
+  .product-art { height: 280px; }
+}
+
+@media (max-width: 560px) {
+  .product-art { height: 300px; }
+  .catalog-deck-image { padding: 12px; }
+}
