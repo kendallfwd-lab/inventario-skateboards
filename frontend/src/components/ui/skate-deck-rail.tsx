@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { createPortal } from "react-dom";
+import { SparklesCore } from "./sparkles";
 
 export interface SkateDeck {
   id: string;
@@ -733,6 +734,7 @@ export function SkateDeckRail({
       className={`relative isolate w-full overflow-hidden bg-background text-foreground [--rail-ink:var(--color-foreground)] dark:[--rail-ink:color-mix(in_oklab,var(--color-foreground)_17%,var(--color-background))] ${className ?? ""}`}
     >
       <Defs uid={uid} h={size.h} />
+      <SparklesCore className="pointer-events-none absolute inset-0 z-0 opacity-30" particleDensity={70} minSize={0.4} maxSize={1.2} particleColor="#7aa2ff" speed={0.6} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={{ background: "radial-gradient(90% 75% at 22% 18%, color-mix(in oklab, var(--color-foreground) 6%, transparent), transparent 70%), radial-gradient(70% 60% at 50% 55%, color-mix(in oklab, var(--color-foreground) 3%, transparent), transparent 80%)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 18%, black 80%, transparent)", maskImage: "linear-gradient(to bottom, transparent, black 18%, black 80%, transparent)" }} />
       {(eyebrow || heading) && (
         <header className="relative z-10 flex flex-col items-center gap-2 px-6 pt-7 text-center">

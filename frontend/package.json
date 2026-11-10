@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.5",
+    "@tsparticles/engine": "^4.5.3",
+    "@tsparticles/react": "^4.5.3",
+    "@tsparticles/slim": "^4.5.3",
     "@vitejs/plugin-react": "^5.0.4",
+    "framer-motion": "^14.11.1",
     "lucide-react": "^0.552.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
