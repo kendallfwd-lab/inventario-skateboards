@@ -7,12 +7,23 @@ export async function askGemini(question:string,context:unknown,options:{strict?
   if(!env.geminiKey)throw Object.assign(new Error('Gemini no configurado'),{status:503});
   const ai=new GoogleGenAI({apiKey:env.geminiKey});
   try{
-    const response=await ai.models.generateContent({
-      model:env.geminiModel,
-      contents:`CONTEXTO DE SOLO LECTURA:\n${JSON.stringify(context)}\nPREGUNTA DEL USUARIO:\n${question}`,
-      config:{systemInstruction,temperature:0.2,maxOutputTokens:700}
-    });
-    return response.text||'Sin respuesta del proveedor de IA.';
+    let lastError:any;
+    for(let attempt=0;attempt<3;attempt++){
+      try{
+        const response=await ai.models.generateContent({
+          model:env.geminiModel,
+          contents:`CONTEXTO DE SOLO LECTURA:\n${JSON.stringify(context)}\nPREGUNTA DEL USUARIO:\n${question}`,
+          config:{systemInstruction,temperature:0.2,maxOutputTokens:700}
+        });
+        return response.text||'Sin respuesta del proveedor de IA.';
+      }catch(error:any){
+        lastError=error;
+        const status=Number(error?.status||error?.code);
+        if(![429,500,503].includes(status)||attempt===2)break;
+        await new Promise(resolve=>setTimeout(resolve,800*(attempt+1)));
+      }
+    }
+    throw lastError;
   }catch(error:any){
     if(options.strict)throw error;
     console.error('Gemini no disponible:',error?.status||error?.message||'error');
