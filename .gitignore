@@ -4,6 +4,7 @@ backend-live.log
 backend-live-error.log
 dev-server.log
 dev-server-error.log
+dev-server*.log
 test-results/
 playwright-report/
 .npm-cache/
