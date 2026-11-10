@@ -805,7 +805,7 @@ export function SkateDeckRail({
                   <span ref={(node) => { turns.current[i] = node; }} data-turn className="absolute inset-0" style={{ transformOrigin: `50% ${HOLE_Y * 100}%`, transform: `perspective(${PERSPECTIVE}px) rotateY(${restAngle(i)}deg)` }}>
                     {fallback
                       ? <FallbackArt tone={i} />
-                      : <img src={item.image} alt="" draggable={false} decoding="async" onError={() => setFailed((old) => (old[item.id] ? old : { ...old, [item.id]: true }))} className="pointer-events-none absolute inset-0 size-full select-none object-contain" />}
+                      : <img src={item.image} alt="" draggable={false} decoding="async" onError={() => setFailed((old) => (old[item.id] ? old : { ...old, [item.id]: true }))} className="pointer-events-none absolute inset-0 size-full select-none object-fill" />}
                     <span ref={(node) => { shades.current[i] = node; }} aria-hidden="true" data-shade className="pointer-events-none absolute inset-0" style={{ ...maskStyle(mask, fallback), background: REST_SHADE }} />
                     <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden" style={maskStyle(mask, fallback)}>
                       <span ref={(node) => { glints.current[i] = node; }} className="absolute inset-y-0 left-0 w-[70%] opacity-0" style={{ background: "linear-gradient(90deg, transparent, color-mix(in oklab, white 55%, transparent) 50%, transparent)" }} />
