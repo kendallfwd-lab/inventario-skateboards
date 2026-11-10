@@ -7,3 +7,4 @@ playwright-report/
 node_modules/
 dist/
 *.tsbuildinfo
+node_modules
