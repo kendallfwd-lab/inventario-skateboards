@@ -58,7 +58,7 @@ const GAP = 0.06;
 const FRONT_EXTRA = 0.36;
 const MAX_H = 380;
 const MIN_RAIL_H = 180;
-/*__SKATE_CHUNK_0__*/
+/*__SKATE_REAL_0__*/
 const CAROUSEL_MAX_H = 430;
 const EDGE = 24;
 const RAIL_TOP = 14;
@@ -119,7 +119,7 @@ function hookGeometry(h: number) {
   const rc = r * 0.95 + t * 0.6;
   const lift = r * 0.25;
   const length = HOOK_LEN * h;
-/*__SKATE_CHUNK_1__*/
+/*__SKATE_REAL_1__*/
   const pad = t + 3;
   const cx = pad + t / 2;
   const cy = r + rc + pad;
@@ -180,7 +180,7 @@ function Hook({ uid, h }: { uid: string; h: number }) {
   const g = hookGeometry(h);
   return (
     <svg aria-hidden="true" data-hook width={g.width} height={g.height} viewBox={`0 0 ${g.width.toFixed(2)} ${g.height.toFixed(2)}`} className="pointer-events-none absolute overflow-visible" style={{ left: `calc(50% + ${g.left.toFixed(2)}px)`, top: g.top }}>
-/*__SKATE_CHUNK_2__*/
+/*__SKATE_REAL_2__*/
       <g fill="none" strokeLinecap="round" stroke="black" strokeOpacity="0.3" strokeWidth={g.t + 0.6} transform="translate(0.9 1.3)">
         <path d={g.shank} />
         <path d={g.curl} />
@@ -241,7 +241,7 @@ function progress(turn: number, i: number) {
 
 export function SkateDeckRail({
   items,
-/*__SKATE_CHUNK_3__*/
+/*__SKATE_REAL_3__*/
   eyebrow,
   heading,
   caption,
@@ -302,7 +302,7 @@ export function SkateDeckRail({
 
   React.useLayoutEffect(() => {
     const stage = stageRef.current;
-/*__SKATE_CHUNK_4__*/
+/*__SKATE_REAL_4__*/
     const section = stage?.parentElement;
     if (!stage || !section) return;
     const measure = () => {
@@ -363,7 +363,7 @@ export function SkateDeckRail({
     const sw = swings.current[i];
     if (sw) sw.style.transform = `rotate(${(theta * (1 - HANG_SHARE)).toFixed(3)}deg)`;
     const tu = turns.current[i];
-/*__SKATE_CHUNK_5__*/
+/*__SKATE_REAL_5__*/
     if (tu) tu.style.transform = `perspective(${PERSPECTIVE}px) rotateY(${angle.toFixed(2)}deg) translateZ(${(LIFT_Z * lift).toFixed(2)}px) scale(${(1 + LIFT_SCALE * e).toFixed(4)})`;
     const shade = shades.current[i];
     if (shade) shade.style.opacity = (1 - lift).toFixed(3);
@@ -424,7 +424,7 @@ export function SkateDeckRail({
             const shared = (va + vb) / 2;
             const kick = (va - vb) * 0.12;
             if (i !== s.drag) s.vx[i] = shared - kick;
-/*__SKATE_CHUNK_6__*/
+/*__SKATE_REAL_6__*/
             if (i + 1 !== s.drag) s.vx[i + 1] = shared + kick;
           }
         }
@@ -485,7 +485,7 @@ export function SkateDeckRail({
       }
     }
     for (let i = 0; i < n; i++) {
-/*__SKATE_CHUNK_7__*/
+/*__SKATE_REAL_7__*/
       const v = ((s.x[i] ?? 0) - (s.frameX[i] ?? 0)) / dt;
       const a = (v - (s.frameV[i] ?? 0)) / dt;
       s.frameV[i] = v;
@@ -546,7 +546,7 @@ export function SkateDeckRail({
     if (old !== null) { impulse(old - 1, 12); impulse(old + 1, -12); }
   }, [active, impulse]);
 
-/*__SKATE_CHUNK_8__*/
+/*__SKATE_REAL_8__*/
   React.useLayoutEffect(() => {
     if (!size.width) return;
     const s = sim.current;
@@ -607,7 +607,7 @@ export function SkateDeckRail({
   const onDetailClose = React.useCallback(() => {
     const index = openIndex;
     if (index === null) return;
-/*__SKATE_CHUNK_9__*/
+/*__SKATE_REAL_9__*/
     returnFocus.current = index;
     setOpenIndex(null);
     live.current.onOpenChange?.(null);
@@ -668,7 +668,7 @@ export function SkateDeckRail({
       }
       return;
     }
-/*__SKATE_CHUNK_10__*/
+/*__SKATE_REAL_10__*/
     if (event.pointerType !== "mouse" || live.current.size.carousel || live.current.openIndex !== null) return;
     const hit = nearest(event.clientX, event.clientY);
     const current = live.current.active;
@@ -729,7 +729,7 @@ export function SkateDeckRail({
     const next = event.key === "Home" ? 0 : event.key === "End" ? count - 1 : clamp(from + (event.key === "ArrowRight" ? 1 : -1), 0, count - 1);
     setFocusIndex(next);
     choose(next);
-/*__SKATE_CHUNK_11__*/
+/*__SKATE_REAL_11__*/
     slots.current[next]?.focus({ preventScroll: true });
   };
 
@@ -790,7 +790,7 @@ export function SkateDeckRail({
           const facing = active === i;
           return (
             <button
-/*__SKATE_CHUNK_12__*/
+/*__SKATE_REAL_12__*/
               key={item.id}
               ref={(node) => { slots.current[i] = node; }}
               type="button"
@@ -851,7 +851,7 @@ export function SkateDeckRail({
         </div>
       )}
 
-/*__SKATE_CHUNK_13__*/
+/*__SKATE_REAL_13__*/
       <div className="relative z-10 flex flex-col items-center gap-3 px-6 pb-7 pt-3 text-center">
         <div id={`${uid}-caption`} aria-live="polite" className="min-h-[2.75rem]">
           <p className="text-sm font-medium">{current ? current.name : caption}</p>
@@ -912,7 +912,7 @@ function GripFace({ uid, item, mask, fallback, tone }: { uid: string; item: Skat
 }
 
 function Detail({ uid, item, index, total, labels, reduced, fallback, extra, source, onLift, onClose }: {
-/*__SKATE_CHUNK_14__*/
+/*__SKATE_REAL_14__*/
   uid: string;
   item: SkateDeck;
   index: number;
@@ -973,7 +973,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
     const a = angle.current;
     closeRef.current?.focus({ preventScroll: true });
     const overflow = document.body.style.overflow;
-/*__SKATE_CHUNK_15__*/
+/*__SKATE_REAL_15__*/
     document.body.style.overflow = "hidden";
     let animation = null as Animation | null;
     if (figure && from && !reduced && from.width > 0) {
@@ -1034,7 +1034,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
   }, [source, reduced, onClose, turnTo]);
 
   React.useEffect(() => {
-/*__SKATE_CHUNK_16__*/
+/*__SKATE_REAL_16__*/
     const onKey = (event: KeyboardEvent) => {
       const dialog = dialogRef.current;
       if (!dialog || dialog.contains(event.target as Node)) return;
@@ -1095,7 +1095,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
             {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}{item.series ? ` Â· ${item.series}` : ""}
           </p>
           <h3 id={titleId} className="text-balance text-xl font-medium tracking-tight sm:text-3xl">{item.name}</h3>
-/*__SKATE_CHUNK_17__*/
+/*__SKATE_REAL_17__*/
           {(item.tag || item.width) && (
             <div className="flex flex-wrap items-baseline gap-3">
               {item.tag && <span className="text-lg font-semibold tabular-nums">{item.tag}</span>}
@@ -1124,5 +1124,4 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
 }
 
 export default SkateDeckRail;
-
-/*__SKATE_CHUNK_18__*/
+/*__SKATE_REAL_18__*/
