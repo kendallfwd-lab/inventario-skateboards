@@ -1046,7 +1046,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
       </button>
       <div className="relative grid w-full max-w-3xl grid-cols-[auto_minmax(0,1fr)] items-center gap-5 sm:gap-12">
         <div ref={figureRef} data-figure className="relative h-[min(68svh,600px)] origin-top sm:h-[min(72svh,600px)]" style={{ aspectRatio: DETAIL_DECK_ASPECT }}>
-          <span aria-hidden="true" className="absolute inset-0 translate-x-[8%] translate-y-[3%] bg-black/25 blur-xl dark:bg-black/70" style={maskStyle(mask, fallback)} />
+          <span aria-hidden="true" className="absolute inset-0 translate-x-[8%] translate-y-[3%] bg-black/15 blur-xl" style={maskStyle(mask, fallback)} />
           <div
             className="absolute inset-0 cursor-grab touch-pan-y active:cursor-grabbing"
             style={{ perspective: "1200px" }}
@@ -1057,7 +1057,7 @@ function Detail({ uid, item, index, total, labels, reduced, fallback, extra, sou
           >
             <div ref={spinRef} data-detail-spin className="absolute inset-0 [transform-style:preserve-3d]">
               <div data-face="graphic" className="absolute inset-0 [backface-visibility:hidden]">
-                {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain" />}
+                {fallback ? <FallbackArt tone={index} /> : <img src={item.image} alt={item.name} draggable={false} className="pointer-events-none absolute inset-0 size-full select-none object-contain mix-blend-screen" />}
                 <Hole h={600} />
               </div>
               <div data-face="grip" className="absolute inset-0 [backface-visibility:hidden]" style={{ transform: "rotateY(180deg)" }}>
