@@ -9,7 +9,7 @@
     "lint": "eslint src tests --ext .ts",
     "test": "node --import tsx --test tests/*.test.ts",
     "db:migrate": "node --import tsx src/db/migrate.ts",
-    "db:seed": "node --import tsx src/db/seed.ts && node --import tsx src/db/store-seed.ts",
+    "db:seed": "node --import tsx src/db/seed.ts && node --import tsx src/db/store-seed.ts && node --import tsx src/db/business-seed.ts",
     "admin:create": "node --import tsx src/db/create-admin.ts",
     "admin:password": "node --import tsx src/db/reset-password.ts",
     "ai:smoke": "node --import tsx src/services/ai-smoke.ts"
