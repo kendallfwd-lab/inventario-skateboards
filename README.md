@@ -69,6 +69,8 @@ npm run test:e2e
 - [Informe académico](docs/informe-academico.md)
 - [Decisiones y fuentes](docs/decisiones-tecnicas.md)
 
-## Limitaciones del entorno de construcción
+## Verificación local
 
-Este workspace no tiene un servidor MySQL ni Docker instalado. El código, esquema y semillas están preparados para MySQL 8.4, pero la ejecución de migraciones, persistencia, auth contra DB, pruebas de integración con MySQL y URLs locales API no se consideran comprobadas hasta correrlo sobre un servicio MySQL. No se despliega ni publica.
+El flujo local fue verificado con MySQL Community Server 8.4.13 en Docker, publicado en `127.0.0.1:3307`. Las migraciones y las semillas se ejecutaron dos veces sin duplicar registros; también se comprobaron persistencia, autenticación con cookie HttpOnly, catálogo, inventario y panel financiero. El puerto puede variar en otras instalaciones: conserva en `.env` el valor que corresponda a tu servidor y no publiques credenciales locales.
+
+Las consultas reproducibles para MySQL Workbench están en [verificacion-sql.sql](docs/verificacion-sql.sql).

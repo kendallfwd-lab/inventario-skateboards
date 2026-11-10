@@ -6,7 +6,11 @@ import {sameOrigin} from '../src/middleware/auth.js';
 
 test('API devuelve 401 a /auth/me sin cookie, sin necesidad de consultar MySQL',async()=>{const server=app.listen(0,'127.0.0.1');try{await new Promise<void>(resolve=>server.once('listening',resolve));const address=server.address();assert.ok(address&&typeof address!=='string');const response=await fetch(`http://127.0.0.1:${address.port}/api/auth/me`);assert.equal(response.status,401);assert.deepEqual(await response.json(),{error:'Autenticación requerida'});}finally{await new Promise<void>(resolve=>server.close(()=>resolve()));}});
 
-test('acepta el origen de Vite en loopback durante desarrollo',()=>{assert.ok(env.allowedOrigins.includes('http://127.0.0.1:5173'));});
+test('acepta los orígenes locales usados por Vite y la vista integrada durante desarrollo',()=>{assert.ok(env.allowedOrigins.includes('http://127.0.0.1:5173'));assert.ok(env.allowedOrigins.includes('http://127.0.0.1:5177'));});
+
+test('permite una mutación desde la vista local integrada',()=>{let continued=false;const req={method:'POST',get:()=> 'http://127.0.0.1:5177'} as never;sameOrigin(req,{} as never,()=>{continued=true;});assert.equal(continued,true);});
+
+test('no acepta puertos loopback fuera del rango local controlado',()=>{let status=0;const req={method:'POST',get:()=> 'http://127.0.0.1:5200'} as never;const res={status:(code:number)=>{status=code;return res;},json:()=>res} as never;sameOrigin(req,res,()=>assert.fail('no debe continuar'));assert.equal(status,403);});
 
 test('rechaza mutaciones desde un origen externo',()=>{let status=0;let body='';const req={method:'POST',get:()=> 'https://sitio-no-autorizado.example'} as never;const res={status:(code:number)=>{status=code;return res;},json:(value:{error:string})=>{body=value.error;return res;}} as never;sameOrigin(req,res,()=>assert.fail('no debe continuar'));assert.equal(status,403);assert.equal(body,'Origen no permitido');});
 
