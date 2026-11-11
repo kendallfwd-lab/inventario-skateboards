@@ -15,10 +15,8 @@ function readBody(req){
 
 export default async function handler(req,res){
   try{
+    const path=Array.isArray(req.query?.path)?req.query.path.join('/'):(req.query?.path||'');
     const incomingUrl=new URL(req.url||'/', 'http://vercel.local');
-    const queryPath=Array.isArray(req.query?.path)?req.query.path.join('/'):(req.query?.path||'');
-    const requestPath=incomingUrl.pathname.replace(/^\/api\/?/,'');
-    const path=(queryPath||requestPath).replace(/^\/+|\/+$/g,'');
     const target=`${backendUrl()}/api/${path}${incomingUrl.search}`;
     const headers=new Headers();
     for(const [name,value] of Object.entries(req.headers)){

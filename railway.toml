@@ -1,9 +1,0 @@
-[build]
-builder = "DOCKERFILE"
-dockerfilePath = "backend/Dockerfile"
-
-[deploy]
-preDeployCommand = "node backend/dist/db/migrate.js && node backend/dist/db/seed.js && node backend/dist/db/store-seed.js && node backend/dist/db/business-seed.js"
-startCommand = "node backend/dist/server.js"
-healthcheckPath = "/api/health"
-restartPolicyType = "ON_FAILURE"
