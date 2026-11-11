@@ -5,8 +5,9 @@ dotenv.config({path:fileURLToPath(new URL('../../../.env',import.meta.url))});
 dotenv.config({path:fileURLToPath(new URL('../../.env',import.meta.url))});
 
 const nodeEnv=process.env.NODE_ENV||'development';
-const frontendUrl=process.env.FRONTEND_URL||'http://localhost:5173';
-const developmentOrigins=Array.from({length:7},(_,index)=>5173+index).flatMap(port=>[
+const frontendUrl=process.env.FRONTEND_URL||'http://localhost:4173';
+const developmentPorts=[...Array.from({length:10},(_,index)=>4173+index),...Array.from({length:10},(_,index)=>5173+index)];
+const developmentOrigins=developmentPorts.flatMap(port=>[
   `http://localhost:${port}`,
   `http://127.0.0.1:${port}`,
   `http://[::1]:${port}`

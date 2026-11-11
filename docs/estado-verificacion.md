@@ -1,18 +1,22 @@
 # Estado de verificación
 
-Fecha de referencia: 9 de noviembre de 2026.
+Fecha de referencia: 10 de noviembre de 2026.
 
-## Comprobado en la ejecución de referencia
+## Comprobado en esta ejecución
 
-- `npm run typecheck`, `npm run build`, `npm run lint` y `npm run test` pasaron.
-- Las seis pruebas originales cubrieron políticas de reorden, alertas, sobreprecio de ₡223 000, duplicados candidatos y autenticación sin sesión.
-- Vite sirvió la página inicial con HTTP 200 en `http://127.0.0.1:5173` y la API inició en el puerto 3010.
-- `npm run ai:smoke` informó `SKIP` sin `GEMINI_API_KEY`, comportamiento esperado.
-- Se añadieron pruebas de regresión para aceptar el origen de Vite en loopback (`127.0.0.1:5173`) y rechazar mutaciones desde orígenes externos.
+- Node.js `v24.19.0` y npm `11.17.0`.
+- `npm run typecheck`, `npm run lint`, `npm test` (18 pruebas) y `npm run build` pasaron con CRM, cobros y promociones. El build conserva la advertencia de Vite por un bundle mayor a 500 kB.
+- Las migraciones `003_crm_customer_payments.sql` y `004_store_promotions.sql` se aplicaron; repetir `npm run db:migrate` no volvió a ejecutar cambios ya registrados. Los conteos de clientes, ventas y pedidos existentes se mantuvieron en 30, 180 y 0.
+- `GET /api/health` devolvió HTTP 200 con MySQL conectado.
+- `npm run test:e2e` pasó 16 casos: 8 flujos en escritorio y móvil, incluida la navegación vertical con rueda incluso sobre la galería, los descuentos válidos e inválidos y la recuperación del catálogo tras una falla temporal del API. El catálogo y las respuestas del checkout se simulan en E2E, sin escribir en la base de datos. Playwright quedó limitado a un worker para evitar tiempos de cierre de Chromium en este entorno.
+- La galería de inicio usa tarjetas estáticas con desplazamiento horizontal nativo; la compilación frontend pasó y el JavaScript principal quedó en 315 kB (antes 590 kB).
+- El endpoint público de validación respondió 422 a un código inexistente (sin insertar pedido); `/api/promotions` respondió 401 sin sesión. No se crearon promociones, pedidos, clientes ni cobros de prueba.
+- La interfaz muestra el registro/historial de cobros solo a los roles `ADMIN` y `FINANZAS`, y limita CRM/promociones a los roles autorizados por sus rutas.
+- La interfaz respondió HTTP 200 en el puerto alternativo de Vite. El puerto puede variar si los puertos de desarrollo predeterminados están ocupados.
 
-## Bloqueos del entorno actual
+## Pendiente
 
-- Docker está instalado, pero el daemon no está iniciado; MySQL tampoco está en PATH. No se ejecutaron migraciones ni semillas, ni se comprobaron persistencia, concurrencia InnoDB, autenticación contra MySQL o el ciclo completo de compras y recepción.
-- `npm install` no pudo completar porque el caché global de npm devolvió errores de permisos y una descarga bloqueada. Reintentar con permisos de usuario adecuados o un caché local limpio.
-- `npm run test:e2e` requiere Chromium. Los casos desktop y móvil quedan pendientes hasta instalar el navegador con `npx playwright install chromium`.
-- Gemini queda pendiente de una clave y cuota propias del usuario. Sin clave, el resto de la aplicación continúa funcionando.
+- No se probaron concurrencia ni rollback con pedidos transaccionales aislados; el flujo de aplicar un código válido y registrar una redención requiere una cuenta administradora y una promoción real.
+- Falta completar la prueba autenticada con cuentas de cada rol y la redención válida con una campaña real.
+- Gemini requiere una clave y cuota propias del usuario. Sin clave, el resto de la aplicación continúa funcionando.
+- Vite mantiene una advertencia de bundle JavaScript mayor a 500 kB; el build finaliza correctamente.

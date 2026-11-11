@@ -35,7 +35,7 @@ npm run dev
 
 `admin:create` requiere terminal interactiva; solicita nombre/correo y una contraseña de mínimo 12 caracteres que no se muestra. No existe cuenta o clave predeterminada.
 
-- Web: http://localhost:5173
+- Web: http://localhost:4173
 - API: http://localhost:3010/api
 - Estado DB: http://localhost:3010/api/health (MySQL debe estar disponible)
 
