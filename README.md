@@ -1,11 +1,5 @@
 # Del Valle Inventory AI
 
-## Tienda Skateboards
-
-La raíz pública ahora es una tienda de tablas en español: exhibidor interactivo, catálogo, filtros, detalle de producto, carrito persistente y solicitud de pedido. El área privada se encuentra en `/admin/login` y conserva la autenticación por cookie HttpOnly. Los pedidos aceptados por administración generan salidas de inventario desde la misma fuente de movimientos; cancelar un pedido aceptado registra una reposición idempotente.
-
-La migración `database/migrations/001_skate_store.sql` añade productos comerciales, variantes vinculadas a materiales inventariables, pedidos de clientes y líneas históricas de precio. Las semillas de tienda cargan veintiocho diseños ficticios de deck con stock inicial idempotente, sin modificar ni renombrar el histórico de construcción.
-
 Aplicación local para compras e inventario de Constructora Del Valle S.A. (datos académicos ficticios). Interfaz React/TypeScript, API Node/Express/TypeScript, MySQL 8.4/InnoDB y Gemini opcional de solo lectura.
 
 ## Lo que incluye
@@ -35,7 +29,7 @@ npm run dev
 
 `admin:create` requiere terminal interactiva; solicita nombre/correo y una contraseña de mínimo 12 caracteres que no se muestra. No existe cuenta o clave predeterminada.
 
-- Web: http://localhost:4173
+- Web: http://localhost:5173
 - API: http://localhost:3010/api
 - Estado DB: http://localhost:3010/api/health (MySQL debe estar disponible)
 
@@ -69,8 +63,6 @@ npm run test:e2e
 - [Informe académico](docs/informe-academico.md)
 - [Decisiones y fuentes](docs/decisiones-tecnicas.md)
 
-## Verificación local
+## Limitaciones del entorno de construcción
 
-El flujo local fue verificado con MySQL Community Server 8.4.13 en Docker, publicado en `127.0.0.1:3307`. Las migraciones y las semillas se ejecutaron dos veces sin duplicar registros; también se comprobaron persistencia, autenticación con cookie HttpOnly, catálogo, inventario y panel financiero. El puerto puede variar en otras instalaciones: conserva en `.env` el valor que corresponda a tu servidor y no publiques credenciales locales.
-
-Las consultas reproducibles para MySQL Workbench están en [verificacion-sql.sql](docs/verificacion-sql.sql).
+Este workspace no tiene un servidor MySQL ni Docker instalado. El código, esquema y semillas están preparados para MySQL 8.4, pero la ejecución de migraciones, persistencia, auth contra DB, pruebas de integración con MySQL y URLs locales API no se consideran comprobadas hasta correrlo sobre un servicio MySQL. No se despliega ni publica.
